@@ -1,11 +1,11 @@
 import React, { useState, useReducer } from 'react';
 import { ADD_TODO, CLEAR_COMPLETED_TODO, TOGGLE_TODO } from '../actions/todoActions.js';
-import { reducer, initialState } from '../reducers/reducer.js';
+import { reducer, initialState } from '../reducers/index.js';
+import '../components/TodoForm.css';
 
 const TodoForm = () => {
-
     const [task, setTask] = useState('');
-    const [todos, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     // Ability to change input
     const handleChange = (e) => {
@@ -32,7 +32,6 @@ const TodoForm = () => {
 
     return(
         <div>
-            <h2>Todo Form</h2>
             <form>
                 <label></label>
                 <input 
@@ -46,11 +45,11 @@ const TodoForm = () => {
                 <button onClick={onSubmit}>ADD TODO</button>
                 <button onClick={clearCompleted}>CLEAR COMPLETED</button>
             </form>
-            <h2>Todo(s)</h2>
+            <h3>Todos</h3>
             {
-                todos.map(todo => (
+                state.map(todo => (
                     <div 
-                    className={`${todo.completed ? 'completed' : ''}`} 
+                    className={`${todo.completed ? 'todos completed' : 'todos'}`} 
                     onClick={() => toggleTask(todo.id)}
                     key={todo.id}
                     >

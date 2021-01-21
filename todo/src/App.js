@@ -5,7 +5,6 @@ import TodoForm from './components/TodoForm';
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to my Todo App!</h1>
       <TodoForm />
     </div>
   );
