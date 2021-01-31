@@ -1,29 +1,49 @@
-import { ADD_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODO } from '../actions/todoActions.js';
+import { ADD_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODO } from '../actions/index.js';
 
-export const initialState = [
-    {
-        item: 'Learn about reducers',
-        completed: false,
-        id: 3892987589
-    }
-];
+export const initialState = {
+    tasks: [
+        {
+            item: 'Learn about reducers',
+            completed: false,
+            id: 3892987589
+        }
+    ]
+};
 
-export const reducer = (state = initialState, action) => {
-    switch(action.type) {
-        case(ADD_TODO):
-            return [
+export const reducer = (state, action) => {
+    console.log('in Reducer', action)
+    switch (action.type) {
+        case ADD_TODO:
+            return ({
                 ...state,
-                {
-                    task: action.payload,
+                tasks: [...state.tasks, {
+                    item: action.payload,
                     completed: false,
                     id: Date.now()
-                }
-            ];
-        case(TOGGLE_TODO):
-            return state.map(task => task.id === action.payload ? {...task, completed: !task.completed} : task)
-        case(CLEAR_COMPLETED_TODO):
-            return state.filter(task => !task.completed)
+                }]
+            });
+        case TOGGLE_TODO:
+            return ({
+                ...state,
+                tasks: state.tasks.map(todo => {
+                    if (todo.id === action.payload) {
+                        return ({
+                            ...todo,
+                            completed: (!todo.completed)
+                        })
+                    } else {
+                        return todo;
+                    }
+                })
+            });
+        case CLEAR_COMPLETED_TODO:
+            return ({
+                ...state,
+                tasks: state.tasks.filter(todo => {
+                    return (!todo.completed);
+                })
+            })
         default:
-            return state
+            return state;
     }
 };
